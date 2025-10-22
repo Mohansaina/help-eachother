@@ -1,0 +1,8 @@
+{
+  "name": "community-help-network",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ]
+}

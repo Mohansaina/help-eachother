@@ -1,54 +1,6 @@
-// Sample data to start with
-let helpRequests = [
-    {
-        id: 1,
-        title: "Need help with cooking pasta",
-        category: "cooking",
-        description: "I'm new to cooking and don't know how to cook pasta properly. Would appreciate someone showing me the basics!",
-        location: "My house",
-        timestamp: new Date().toLocaleString()
-    },
-    {
-        id: 2,
-        title: "Computer repair help needed",
-        category: "tech",
-        description: "My laptop is running very slowly and I think it needs cleaning. Need someone who knows about computer hardware.",
-        location: "Online",
-        timestamp: new Date().toLocaleString()
-    },
-    {
-        id: 3,
-        title: "Budget planning for household",
-        category: "finance",
-        description: "Having trouble managing my monthly budget. Need advice on how to save money while covering all expenses.",
-        location: "Coffee shop near downtown",
-        timestamp: new Date().toLocaleString()
-    }
-];
-
-// Sample helpers data
-let helpers = [
-    {
-        id: 1,
-        name: "Alex Johnson",
-        skill: "Cooking",
-        category: "cooking",
-        availability: "Weekends and evenings",
-        contactMethod: "email",
-        contactInfo: "alex.cooking@example.com",
-        timestamp: new Date().toLocaleString()
-    },
-    {
-        id: 2,
-        name: "Sam Wilson",
-        skill: "Computer Repair",
-        category: "tech",
-        availability: "Weekdays after 5pm",
-        contactMethod: "phone",
-        contactInfo: "+1 (555) 123-4567",
-        timestamp: new Date().toLocaleString()
-    }
-];
+// Global variables for data
+let helpRequests = [];
+let helpers = [];
 
 // Category display names
 const categoryNames = {
@@ -69,6 +21,72 @@ const contactMethodNames = {
     inperson: "In-person",
     video: "Video Call"
 };
+
+// Function to fetch data from server
+async function fetchData() {
+    try {
+        // In a real implementation, these would fetch from actual API endpoints
+        // For now, we'll use sample data
+        helpRequests = [
+            {
+                id: 1,
+                title: "Need help with cooking pasta",
+                category: "cooking",
+                description: "I'm new to cooking and don't know how to cook pasta properly. Would appreciate someone showing me the basics!",
+                location: "My house",
+                timestamp: new Date().toLocaleString()
+            },
+            {
+                id: 2,
+                title: "Computer repair help needed",
+                category: "tech",
+                description: "My laptop is running very slowly and I think it needs cleaning. Need someone who knows about computer hardware.",
+                location: "Online",
+                timestamp: new Date().toLocaleString()
+            },
+            {
+                id: 3,
+                title: "Budget planning for household",
+                category: "finance",
+                description: "Having trouble managing my monthly budget. Need advice on how to save money while covering all expenses.",
+                location: "Coffee shop near downtown",
+                timestamp: new Date().toLocaleString()
+            }
+        ];
+        
+        helpers = [
+            {
+                id: 1,
+                name: "Alex Johnson",
+                skill: "Cooking",
+                category: "cooking",
+                availability: "Weekends and evenings",
+                contactMethod: "email",
+                contactInfo: "alex.cooking@example.com",
+                timestamp: new Date().toLocaleString()
+            },
+            {
+                id: 2,
+                name: "Sam Wilson",
+                skill: "Computer Repair",
+                category: "tech",
+                availability: "Weekdays after 5pm",
+                contactMethod: "phone",
+                contactInfo: "+1 (555) 123-4567",
+                timestamp: new Date().toLocaleString()
+            }
+        ];
+        
+        // Display the data
+        displayRequests();
+        displayHelpers();
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        // Fallback to sample data
+        displayRequests();
+        displayHelpers();
+    }
+}
 
 // Function to display help requests
 function displayRequests(categoryFilter = 'all') {
@@ -342,8 +360,7 @@ function addNewRequestAnimation() {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
-    displayRequests();
-    displayHelpers();
+    fetchData();
     addNewRequestAnimation();
     
     // Set first nav item as active
