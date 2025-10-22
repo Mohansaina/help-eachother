@@ -62,6 +62,7 @@ app.post('/api/requests', async (req, res) => {
           category: req.body.category,
           description: req.body.description,
           location: req.body.location,
+          urgency: req.body.urgency,
           timestamp: new Date().toLocaleString()
         }
       ])
@@ -89,6 +90,7 @@ app.post('/api/helpers', async (req, res) => {
           availability: req.body.availability,
           contact_method: req.body.contactMethod,
           contact_info: req.body.contactInfo,
+          bio: req.body.bio,
           timestamp: new Date().toLocaleString()
         }
       ])

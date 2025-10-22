@@ -3,12 +3,19 @@
 A platform connecting people who need help with those who can offer guidance.
 
 ## Features
-- Request help in various categories
-- Offer help to others in the community
-- Browse helpers directory
+- Request help in various categories with urgency levels
+- Offer help to others in the community with detailed profiles
+- Browse helpers directory with filtering options
 - Filter requests and helpers by category
 - Responsive design for all devices
 - Persistent data storage with Supabase
+- Enhanced forms with validation and additional fields
+
+## Enhanced Features
+- **Urgency Levels**: Specify how urgent your help request is (Low, Medium, High)
+- **Detailed Helper Profiles**: Helpers can include a brief bio about their experience
+- **Terms Agreement**: Helpers must agree to terms before registering
+- **Improved Form Validation**: Better user feedback and validation
 
 ## Technologies Used
 - HTML5

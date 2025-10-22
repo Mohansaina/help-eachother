@@ -72,6 +72,7 @@ function displayRequests(categoryFilter = 'all') {
             <h3>
                 <i class="fas fa-question-circle"></i> ${request.title}
                 <span class="category-tag">${categoryNames[request.category] || request.category}</span>
+                ${request.urgency ? `<span class="urgency-tag urgency-${request.urgency}">${request.urgency.charAt(0).toUpperCase() + request.urgency.slice(1)}</span>` : ''}
             </h3>
             <p>${request.description}</p>
             <p><strong>Location:</strong> ${request.location || 'Not specified'}</p>
@@ -107,6 +108,7 @@ function displayHelpers(categoryFilter = 'all') {
                 <span class="category-tag">${categoryNames[helper.category] || helper.category}</span>
             </h3>
             <p><strong>Skill:</strong> ${helper.skill}</p>
+            ${helper.bio ? `<p><strong>Bio:</strong> ${helper.bio}</p>` : ''}
             <p><strong>Availability:</strong> ${helper.availability}</p>
             <p><strong>Contact:</strong> ${contactMethodNames[helper.contact_method] || helper.contact_method}: ${helper.contact_info}</p>
             <div class="meta">
@@ -127,6 +129,7 @@ document.getElementById('helpForm').addEventListener('submit', async function(e)
     const category = document.getElementById('helpCategory').value;
     const description = document.getElementById('helpDescription').value;
     const location = document.getElementById('helpLocation').value;
+    const urgency = document.getElementById('helpUrgency').value;
     
     try {
         const response = await fetch('/api/requests', {
@@ -138,7 +141,9 @@ document.getElementById('helpForm').addEventListener('submit', async function(e)
                 title,
                 category,
                 description,
-                location
+                location,
+                urgency,
+                timestamp: new Date().toLocaleString()
             })
         });
         
@@ -168,12 +173,19 @@ document.getElementById('helpForm').addEventListener('submit', async function(e)
 document.getElementById('offerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    // Check if terms agreement is checked
+    if (!document.getElementById('termsAgreement').checked) {
+        showMessage('Please agree to the terms before submitting.', 'error');
+        return;
+    }
+    
     const name = document.getElementById('helperName').value;
     const skill = document.getElementById('skill').value;
     const category = document.getElementById('skillCategory').value;
     const availability = document.getElementById('availability').value;
     const contactMethod = document.getElementById('contactMethod').value;
     const contactInfo = document.getElementById('contactInfo').value;
+    const bio = document.getElementById('helperBio').value;
     
     try {
         const response = await fetch('/api/helpers', {
@@ -187,7 +199,9 @@ document.getElementById('offerForm').addEventListener('submit', async function(e
                 category,
                 availability,
                 contactMethod,
-                contactInfo
+                contactInfo,
+                bio,
+                timestamp: new Date().toLocaleString()
             })
         });
         

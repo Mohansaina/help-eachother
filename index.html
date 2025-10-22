@@ -33,12 +33,13 @@
             <div class="card">
                 <form id="helpForm">
                     <div class="form-group">
-                        <label for="helpTitle">What do you need help with?</label>
+                        <label for="helpTitle">What do you need help with? *</label>
                         <input type="text" id="helpTitle" placeholder="e.g., Cooking pasta, fixing computer, etc." required>
+                        <small class="form-text">Be specific about what you need help with</small>
                     </div>
                     
                     <div class="form-group">
-                        <label for="helpCategory">Category:</label>
+                        <label for="helpCategory">Category: *</label>
                         <select id="helpCategory" required>
                             <option value="">Select a category</option>
                             <option value="cooking">Cooking & Nutrition</option>
@@ -53,13 +54,24 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="helpDescription">Describe your situation:</label>
-                        <textarea id="helpDescription" placeholder="Tell us more about what you need help with..." required></textarea>
+                        <label for="helpDescription">Describe your situation: *</label>
+                        <textarea id="helpDescription" placeholder="Tell us more about what you need help with... Be as detailed as possible to help others understand your needs." required></textarea>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="helpLocation">Location (optional):</label>
-                        <input type="text" id="helpLocation" placeholder="e.g., My house, Online, etc.">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="helpLocation">Location (optional):</label>
+                            <input type="text" id="helpLocation" placeholder="e.g., My house, Online, etc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="helpUrgency">Urgency Level:</label>
+                            <select id="helpUrgency">
+                                <option value="low">Low - Anytime</option>
+                                <option value="medium" selected>Medium - Within a few days</option>
+                                <option value="high">High - As soon as possible</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <button type="submit" class="btn-primary">
@@ -74,17 +86,18 @@
             <div class="card">
                 <form id="offerForm">
                     <div class="form-group">
-                        <label for="helperName">Your Name:</label>
+                        <label for="helperName">Your Name: *</label>
                         <input type="text" id="helperName" placeholder="e.g., Mohan Ruttala" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="skill">What skill can you help with?</label>
+                        <label for="skill">What skill can you help with? *</label>
                         <input type="text" id="skill" placeholder="e.g., Coding, Cooking, Tutoring, etc." required>
+                        <small class="form-text">List your specific skills or areas of expertise</small>
                     </div>
                     
                     <div class="form-group">
-                        <label for="skillCategory">Category:</label>
+                        <label for="skillCategory">Category: *</label>
                         <select id="skillCategory" required>
                             <option value="">Select a category</option>
                             <option value="cooking">Cooking & Nutrition</option>
@@ -99,24 +112,38 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="availability">Your availability:</label>
-                        <textarea id="availability" placeholder="When are you available to help? (e.g., Weekdays after 5pm, weekends, etc.)" required></textarea>
+                        <label for="availability">Your availability: *</label>
+                        <textarea id="availability" placeholder="When are you available to help? (e.g., Weekdays after 5pm, weekends, etc.) Be as specific as possible." required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactMethod">Preferred contact method: *</label>
+                            <select id="contactMethod" required>
+                                <option value="">Select contact method</option>
+                                <option value="email">Email</option>
+                                <option value="phone">Phone</option>
+                                <option value="inperson">In-person</option>
+                                <option value="video">Video Call</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactInfo">Contact Information: *</label>
+                            <input type="text" id="contactInfo" placeholder="e.g., email@example.com or +1234567890" required>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="contactMethod">Preferred contact method:</label>
-                        <select id="contactMethod" required>
-                            <option value="">Select contact method</option>
-                            <option value="email">Email</option>
-                            <option value="phone">Phone</option>
-                            <option value="inperson">In-person</option>
-                            <option value="video">Video Call</option>
-                        </select>
+                        <label for="helperBio">Brief Bio (optional):</label>
+                        <textarea id="helperBio" placeholder="Tell us a little about yourself and your experience with this skill..."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="contactInfo">Contact Information:</label>
-                        <input type="text" id="contactInfo" placeholder="e.g., email@example.com or +1234567890" required>
+                        <label>
+                            <input type="checkbox" id="termsAgreement" required>
+                            I agree to use this platform responsibly and respectfully
+                        </label>
                     </div>
                     
                     <button type="submit" class="btn-secondary">

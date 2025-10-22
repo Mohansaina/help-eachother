@@ -5,6 +5,7 @@ create table if not exists help_requests (
   category text not null,
   description text not null,
   location text,
+  urgency text,
   timestamp text not null
 );
 
@@ -17,6 +18,7 @@ create table if not exists helpers (
   availability text not null,
   contact_method text not null,
   contact_info text not null,
+  bio text,
   timestamp text not null
 );
 

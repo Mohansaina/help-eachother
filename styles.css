@@ -165,12 +165,31 @@ nav ul li a.active {
     margin-bottom: 1.5rem;
 }
 
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
 label {
     display: block;
     margin-bottom: 0.75rem;
     font-weight: 600;
     color: var(--dark-color);
     font-size: 1.1rem;
+}
+
+.form-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-style: italic;
 }
 
 input, textarea, select {
@@ -194,6 +213,11 @@ input:focus, textarea:focus, select:focus {
 textarea {
     min-height: 150px;
     resize: vertical;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.75rem;
 }
 
 /* Button Styles */
@@ -281,6 +305,30 @@ textarea {
     font-size: 0.85rem;
     font-weight: 600;
     margin-left: 0.75rem;
+}
+
+.urgency-tag {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 0.75rem;
+}
+
+.urgency-low {
+    background: linear-gradient(135deg, #4caf50, #81c784);
+    color: white;
+}
+
+.urgency-medium {
+    background: linear-gradient(135deg, #ff9800, #ffb74d);
+    color: white;
+}
+
+.urgency-high {
+    background: linear-gradient(135deg, #f44336, #e57373);
+    color: white;
 }
 
 .request-card p, .helper-card p {
