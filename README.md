@@ -44,10 +44,17 @@ A platform connecting people who need help with those who can offer guidance.
 4. Create a `.env` file with your Supabase credentials:
    ```
    SUPABASE_URL=your_supabase_url
-   SUPABASE_KEY=your_supabase_anon_key
+   SUPABASE_KEY=your_supabase_service_role_key
    ```
 5. Start the development server: `npm start`
 6. Open your browser to the provided local address
+
+### Getting Your Supabase Service Role Key
+1. Go to your Supabase dashboard: https://supabase.com/dashboard/project/raxgljgmtqsoscdahegq
+2. Click on "Project Settings" (gear icon) in the left sidebar
+3. Click on "API" 
+4. Scroll down to find your "service_role" key (NOT the anon key)
+5. Copy this key and paste it in your `.env` file as the `SUPABASE_KEY` value
 
 ### For Server Deployment (Render)
 1. Fork this repository
@@ -55,7 +62,7 @@ A platform connecting people who need help with those who can offer guidance.
 3. Connect your forked repository
 4. Add environment variables:
    - SUPABASE_URL: your Supabase project URL
-   - SUPABASE_KEY: your Supabase anon key
+   - SUPABASE_KEY: your Supabase service role key (NOT the anon key)
 5. Set the build command to `npm install`
 6. Set the start command to `npm start`
 7. Deploy!
@@ -75,7 +82,7 @@ A platform connecting people who need help with those who can offer guidance.
 4. Connect your GitHub repository
 5. Add environment variables:
    - SUPABASE_URL: your Supabase project URL
-   - SUPABASE_KEY: your Supabase anon key
+   - SUPABASE_KEY: your Supabase service role key (NOT the anon key)
 6. Set:
    - Build Command: `npm install`
    - Start Command: `npm start`
