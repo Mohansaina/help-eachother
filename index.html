@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Help Network</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-hands-helping"></i> Community Help Network</h1>
+            <p>Connecting people who need help with those who can offer guidance</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#request-help" class="active">Request Help</a></li>
+                <li><a href="#offer-help">Offer Help</a></li>
+                <li><a href="#helpers-directory">Helpers</a></li>
+                <li><a href="#requests">View Requests</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <section id="request-help" class="section">
+            <h2><i class="fas fa-question-circle"></i> Need Help?</h2>
+            <div class="card">
+                <form id="helpForm">
+                    <div class="form-group">
+                        <label for="helpTitle">What do you need help with?</label>
+                        <input type="text" id="helpTitle" placeholder="e.g., Cooking pasta, fixing computer, etc." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="helpCategory">Category:</label>
+                        <select id="helpCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="cooking">Cooking & Nutrition</option>
+                            <option value="study">Study & Education</option>
+                            <option value="tech">Technology</option>
+                            <option value="health">Health & Wellness</option>
+                            <option value="finance">Finance & Budgeting</option>
+                            <option value="home">Home Maintenance</option>
+                            <option value="creative">Creative Skills</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="helpDescription">Describe your situation:</label>
+                        <textarea id="helpDescription" placeholder="Tell us more about what you need help with..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="helpLocation">Location (optional):</label>
+                        <input type="text" id="helpLocation" placeholder="e.g., My house, Online, etc.">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> Post Help Request
+                    </button>
+                </form>
+            </div>
+        </section>
+        
+        <section id="offer-help" class="section">
+            <h2><i class="fas fa-hands"></i> Offer Help</h2>
+            <div class="card">
+                <form id="offerForm">
+                    <div class="form-group">
+                        <label for="helperName">Your Name:</label>
+                        <input type="text" id="helperName" placeholder="e.g., Mohan Ruttala" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skill">What skill can you help with?</label>
+                        <input type="text" id="skill" placeholder="e.g., Coding, Cooking, Tutoring, etc." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skillCategory">Category:</label>
+                        <select id="skillCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="cooking">Cooking & Nutrition</option>
+                            <option value="study">Study & Education</option>
+                            <option value="tech">Technology</option>
+                            <option value="health">Health & Wellness</option>
+                            <option value="finance">Finance & Budgeting</option>
+                            <option value="home">Home Maintenance</option>
+                            <option value="creative">Creative Skills</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="availability">Your availability:</label>
+                        <textarea id="availability" placeholder="When are you available to help? (e.g., Weekdays after 5pm, weekends, etc.)" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactMethod">Preferred contact method:</label>
+                        <select id="contactMethod" required>
+                            <option value="">Select contact method</option>
+                            <option value="email">Email</option>
+                            <option value="phone">Phone</option>
+                            <option value="inperson">In-person</option>
+                            <option value="video">Video Call</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactInfo">Contact Information:</label>
+                        <input type="text" id="contactInfo" placeholder="e.g., email@example.com or +1234567890" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-secondary">
+                        <i class="fas fa-user-plus"></i> Register as Helper
+                    </button>
+                </form>
+            </div>
+        </section>
+        
+        <section id="helpers-directory" class="section">
+            <h2><i class="fas fa-users"></i> Helpers Directory</h2>
+            <div class="filters">
+                <label for="helperCategoryFilter">Filter by category:</label>
+                <select id="helperCategoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="cooking">Cooking & Nutrition</option>
+                    <option value="study">Study & Education</option>
+                    <option value="tech">Technology</option>
+                    <option value="health">Health & Wellness</option>
+                    <option value="finance">Finance & Budgeting</option>
+                    <option value="home">Home Maintenance</option>
+                    <option value="creative">Creative Skills</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div id="helpersContainer">
+                <!-- Helpers will be displayed here -->
+            </div>
+        </section>
+        
+        <section id="requests" class="section">
+            <h2><i class="fas fa-list"></i> Current Help Requests</h2>
+            <div class="filters">
+                <label for="categoryFilter">Filter by category:</label>
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="cooking">Cooking & Nutrition</option>
+                    <option value="study">Study & Education</option>
+                    <option value="tech">Technology</option>
+                    <option value="health">Health & Wellness</option>
+                    <option value="finance">Finance & Budgeting</option>
+                    <option value="home">Home Maintenance</option>
+                    <option value="creative">Creative Skills</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div id="requestsContainer">
+                <!-- Help requests will be displayed here -->
+            </div>
+        </section>
+        
+        <section id="about" class="section">
+            <h2><i class="fas fa-info-circle"></i> About Community Help Network</h2>
+            <div class="card">
+                <p>Welcome to Community Help Network, a platform designed to connect people who need assistance with those who can offer guidance.</p>
+                
+                <h3>How It Works</h3>
+                <ol>
+                    <li><strong>Request Help</strong> - Post what you need assistance with</li>
+                    <li><strong>Offer Help</strong> - Share your skills with others in the community</li>
+                    <li><strong>Connect</strong> - Get matched with someone who can help</li>
+                    <li><strong>Learn</strong> - Gain new skills and knowledge</li>
+                </ol>
+                
+                <h3>Why Use Community Help Network?</h3>
+                <ul>
+                    <li>Free to use for everyone</li>
+                    <li>Safe and secure environment</li>
+                    <li>Build connections with people in your community</li>
+                    <li>Learn practical life skills</li>
+                    <li>Help others and make a positive impact</li>
+                </ul>
+                
+                <h3>Who Can Participate?</h3>
+                <p>Anyone can join our community! Whether you're a student, professional, retiree, or anyone in between, you can either request help or offer your expertise to others.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Community Help Network. Connecting people, one help request at a time.</p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

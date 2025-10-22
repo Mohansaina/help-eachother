@@ -1,0 +1,21 @@
+{
+  "name": "community-help-network",
+  "version": "1.0.0",
+  "description": "A platform connecting people who need help with those who can offer guidance",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve",
+    "build": "echo 'No build required for static site'"
+  },
+  "keywords": [
+    "community",
+    "help",
+    "network",
+    "peer-to-peer"
+  ],
+  "author": "Mohan Ruttala",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}
