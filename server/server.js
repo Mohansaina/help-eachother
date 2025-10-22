@@ -1,62 +1,106 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
+
+// Initialize Supabase client
+const supabaseUrl = process.env.SUPABASE_URL || 'https://raxgljgmtqsoscdahegq.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY || 'YOUR_SUPABASE_ANON_KEY_HERE';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../')));
 
-// API endpoint to get help requests (in-memory storage for demo)
-let helpRequests = [
-  {
-    id: 1,
-    title: "Need help with cooking pasta",
-    category: "cooking",
-    description: "I'm new to cooking and don't know how to cook pasta properly. Would appreciate someone showing me the basics!",
-    location: "My house",
-    timestamp: new Date().toLocaleString()
-  },
-  {
-    id: 2,
-    title: "Computer repair help needed",
-    category: "tech",
-    description: "My laptop is running very slowly and I think it needs cleaning. Need someone who knows about computer hardware.",
-    location: "Online",
-    timestamp: new Date().toLocaleString()
-  }
-];
-
-// API endpoint to get helpers (in-memory storage for demo)
-let helpers = [
-  {
-    id: 1,
-    name: "Alex Johnson",
-    skill: "Cooking",
-    category: "cooking",
-    availability: "Weekends and evenings",
-    contactMethod: "email",
-    contactInfo: "alex.cooking@example.com",
-    timestamp: new Date().toLocaleString()
-  },
-  {
-    id: 2,
-    name: "Sam Wilson",
-    skill: "Computer Repair",
-    category: "tech",
-    availability: "Weekdays after 5pm",
-    contactMethod: "phone",
-    contactInfo: "+1 (555) 123-4567",
-    timestamp: new Date().toLocaleString()
-  }
-];
-
 // API routes
-app.get('/api/requests', (req, res) => {
-  res.json(helpRequests);
+// Get all help requests
+app.get('/api/requests', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('help_requests')
+      .select('*')
+      .order('id', { ascending: false });
+
+    if (error) throw error;
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching requests:', error);
+    res.status(500).json({ error: 'Failed to fetch requests' });
+  }
 });
 
-app.get('/api/helpers', (req, res) => {
-  res.json(helpers);
+// Get all helpers
+app.get('/api/helpers', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('helpers')
+      .select('*')
+      .order('id', { ascending: false });
+
+    if (error) throw error;
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching helpers:', error);
+    res.status(500).json({ error: 'Failed to fetch helpers' });
+  }
+});
+
+// Add a new help request
+app.post('/api/requests', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('help_requests')
+      .insert([
+        {
+          title: req.body.title,
+          category: req.body.category,
+          description: req.body.description,
+          location: req.body.location,
+          timestamp: new Date().toLocaleString()
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(201).json(data);
+  } catch (error) {
+    console.error('Error creating request:', error);
+    res.status(500).json({ error: 'Failed to create request' });
+  }
+});
+
+// Add a new helper
+app.post('/api/helpers', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('helpers')
+      .insert([
+        {
+          name: req.body.name,
+          skill: req.body.skill,
+          category: req.body.category,
+          availability: req.body.availability,
+          contact_method: req.body.contactMethod,
+          contact_info: req.body.contactInfo,
+          timestamp: new Date().toLocaleString()
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(201).json(data);
+  } catch (error) {
+    console.error('Error creating helper:', error);
+    res.status(500).json({ error: 'Failed to create helper' });
+  }
 });
 
 // Serve the main HTML file for all other routes (for SPA)

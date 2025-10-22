@@ -25,57 +25,21 @@ const contactMethodNames = {
 // Function to fetch data from server
 async function fetchData() {
     try {
-        // In a real implementation, these would fetch from actual API endpoints
-        // For now, we'll use sample data
-        helpRequests = [
-            {
-                id: 1,
-                title: "Need help with cooking pasta",
-                category: "cooking",
-                description: "I'm new to cooking and don't know how to cook pasta properly. Would appreciate someone showing me the basics!",
-                location: "My house",
-                timestamp: new Date().toLocaleString()
-            },
-            {
-                id: 2,
-                title: "Computer repair help needed",
-                category: "tech",
-                description: "My laptop is running very slowly and I think it needs cleaning. Need someone who knows about computer hardware.",
-                location: "Online",
-                timestamp: new Date().toLocaleString()
-            },
-            {
-                id: 3,
-                title: "Budget planning for household",
-                category: "finance",
-                description: "Having trouble managing my monthly budget. Need advice on how to save money while covering all expenses.",
-                location: "Coffee shop near downtown",
-                timestamp: new Date().toLocaleString()
-            }
-        ];
+        // Fetch help requests from server
+        const requestsResponse = await fetch('/api/requests');
+        if (requestsResponse.ok) {
+            helpRequests = await requestsResponse.json();
+        } else {
+            throw new Error('Failed to fetch requests');
+        }
         
-        helpers = [
-            {
-                id: 1,
-                name: "Alex Johnson",
-                skill: "Cooking",
-                category: "cooking",
-                availability: "Weekends and evenings",
-                contactMethod: "email",
-                contactInfo: "alex.cooking@example.com",
-                timestamp: new Date().toLocaleString()
-            },
-            {
-                id: 2,
-                name: "Sam Wilson",
-                skill: "Computer Repair",
-                category: "tech",
-                availability: "Weekdays after 5pm",
-                contactMethod: "phone",
-                contactInfo: "+1 (555) 123-4567",
-                timestamp: new Date().toLocaleString()
-            }
-        ];
+        // Fetch helpers from server
+        const helpersResponse = await fetch('/api/helpers');
+        if (helpersResponse.ok) {
+            helpers = await helpersResponse.json();
+        } else {
+            throw new Error('Failed to fetch helpers');
+        }
         
         // Display the data
         displayRequests();
@@ -144,10 +108,10 @@ function displayHelpers(categoryFilter = 'all') {
             </h3>
             <p><strong>Skill:</strong> ${helper.skill}</p>
             <p><strong>Availability:</strong> ${helper.availability}</p>
-            <p><strong>Contact:</strong> ${contactMethodNames[helper.contactMethod] || helper.contactMethod}: ${helper.contactInfo}</p>
+            <p><strong>Contact:</strong> ${contactMethodNames[helper.contact_method] || helper.contact_method}: ${helper.contact_info}</p>
             <div class="meta">
                 <span><i class="far fa-clock"></i> Registered on: ${helper.timestamp}</span>
-                <button class="contact-btn" onclick="contactHelperDirect('${helper.contactInfo}')">
+                <button class="contact-btn" onclick="contactHelperDirect('${helper.contact_info}')">
                     <i class="fas fa-envelope"></i> Contact Directly
                 </button>
             </div>
@@ -156,7 +120,7 @@ function displayHelpers(categoryFilter = 'all') {
 }
 
 // Function to handle help request form submission
-document.getElementById('helpForm').addEventListener('submit', function(e) {
+document.getElementById('helpForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const title = document.getElementById('helpTitle').value;
@@ -164,30 +128,44 @@ document.getElementById('helpForm').addEventListener('submit', function(e) {
     const description = document.getElementById('helpDescription').value;
     const location = document.getElementById('helpLocation').value;
     
-    const newRequest = {
-        id: helpRequests.length > 0 ? Math.max(...helpRequests.map(r => r.id)) + 1 : 1,
-        title: title,
-        category: category,
-        description: description,
-        location: location,
-        timestamp: new Date().toLocaleString()
-    };
-    
-    helpRequests.push(newRequest);
-    displayRequests(document.getElementById('categoryFilter').value);
-    
-    // Reset form
-    this.reset();
-    
-    // Show success message
-    showMessage('Your help request has been posted successfully!', 'success');
-    
-    // Scroll to requests section
-    document.getElementById('requests').scrollIntoView({ behavior: 'smooth' });
+    try {
+        const response = await fetch('/api/requests', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title,
+                category,
+                description,
+                location
+            })
+        });
+        
+        if (response.ok) {
+            const newRequest = await response.json();
+            helpRequests.push(newRequest);
+            displayRequests(document.getElementById('categoryFilter').value);
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            showMessage('Your help request has been posted successfully!', 'success');
+            
+            // Scroll to requests section
+            document.getElementById('requests').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            throw new Error('Failed to submit request');
+        }
+    } catch (error) {
+        console.error('Error submitting request:', error);
+        showMessage('Failed to submit your request. Please try again.', 'error');
+    }
 });
 
 // Function to handle offer help form submission
-document.getElementById('offerForm').addEventListener('submit', function(e) {
+document.getElementById('offerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const name = document.getElementById('helperName').value;
@@ -197,28 +175,42 @@ document.getElementById('offerForm').addEventListener('submit', function(e) {
     const contactMethod = document.getElementById('contactMethod').value;
     const contactInfo = document.getElementById('contactInfo').value;
     
-    const newHelper = {
-        id: helpers.length > 0 ? Math.max(...helpers.map(h => h.id)) + 1 : 1,
-        name: name,
-        skill: skill,
-        category: category,
-        availability: availability,
-        contactMethod: contactMethod,
-        contactInfo: contactInfo,
-        timestamp: new Date().toLocaleString()
-    };
-    
-    helpers.push(newHelper);
-    displayHelpers(document.getElementById('helperCategoryFilter').value);
-    
-    // Reset form
-    this.reset();
-    
-    // Show success message
-    showMessage(`Thank you ${name} for offering to help with ${skill}! Your information has been recorded.`, 'success');
-    
-    // Scroll to helpers directory
-    document.getElementById('helpers-directory').scrollIntoView({ behavior: 'smooth' });
+    try {
+        const response = await fetch('/api/helpers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                skill,
+                category,
+                availability,
+                contactMethod,
+                contactInfo
+            })
+        });
+        
+        if (response.ok) {
+            const newHelper = await response.json();
+            helpers.push(newHelper);
+            displayHelpers(document.getElementById('helperCategoryFilter').value);
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            showMessage(`Thank you ${name} for offering to help with ${skill}! Your information has been recorded.`, 'success');
+            
+            // Scroll to helpers directory
+            document.getElementById('helpers-directory').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            throw new Error('Failed to submit helper information');
+        }
+    } catch (error) {
+        console.error('Error submitting helper information:', error);
+        showMessage('Failed to submit your helper information. Please try again.', 'error');
+    }
 });
 
 // Function to contact a helper (placeholder)
